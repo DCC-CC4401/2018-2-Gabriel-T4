@@ -1,5 +1,5 @@
 from django.contrib import admin
-from proyecto.coevaluaciones.models import Usuario, Curso, Ramo, Grupo, HistorialRoles, HistorialGrupos, Pregunta,\
+from coevaluaciones.models import Usuario, Curso, Ramo, Grupo, HistorialRoles, HistorialGrupos, Pregunta,\
     Cuestionario
 
 # Register your models here.
