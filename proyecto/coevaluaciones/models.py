@@ -2,18 +2,27 @@ from django.db import models
 
 # Create your models here.
 
+
 class Usuario(models.Model):
+    estudiante = 1
+    profesor = 2
+    auxiliar = 3
+    ayudante = 4
+    tipo = ((estudiante, 1),
+            (profesor, 2),
+            (auxiliar, 3),
+            (ayudante, 4),)
     rut = models.IntegerField()
     # TODO cambiar almacenamiento contraseña VERSION MUY PRELIMINAR, ESTO HAY QUE CAMBIARLO
     password = models.CharField(max_length=30)
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30)
     email = models.EmailField()
-    # TODO usar choices
-    tipo_usuario = models.IntegerField()
+    tipo_usuario = models.IntegerField(max_length=1, choices=tipo)
 
     def __str__(self):
         return '{}, {}'.format(self.apellido, self.nombre)
+
 
 class Ramo(models.Model):
     codigo = models.CharField(max_length=10)
@@ -33,7 +42,6 @@ class Curso(models.Model):
     profesores = models.ManyToManyField(Usuario, related_name='lista_profesores')
     auxiliares = models.ManyToManyField(Usuario, related_name='lista_auxiliares')
     ayudantes = models.ManyToManyField(Usuario, related_name='lista_ayudantes')
-
 
     def __str__(self):
         return '{}-{} {} {}, {}'.format(self.codigo_ramo,
@@ -58,7 +66,7 @@ class Grupo(models.Model):
 
 
 class HistorialRoles(models.Model):
-    #llaves que identifican el usuario y el curso en el que se realiza la modificacion
+    # llaves que identifican el usuario y el curso en el que se realiza la modificacion
     usuario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
 
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING)
@@ -106,8 +114,6 @@ class Pregunta(models.Model):
 
     def __str__(self):
         return 'Pregunta ' + self.id
-
-
 
 
 class Cuestionario(models.Model):
