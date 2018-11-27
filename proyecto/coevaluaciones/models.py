@@ -141,3 +141,16 @@ class Cuestionario(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+COEVALUACION_ABIERTA = True
+COEVALUACION_CERRADA = False
+
+
+class Coevaluacion(models.Model):
+    nombre = models.CharField(max_length=30)
+    fecha_inicio = models.DateTimeField()
+    fecha_fin = models.DateTimeField()
+    estado = models.BooleanField()
+    cuestionario = models.ForeignKey(Cuestionario)
+    curso = models.ForeignKey(Curso)
