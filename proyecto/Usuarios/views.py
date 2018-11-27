@@ -19,11 +19,32 @@ def inicio_sesion(request):
             login(request, user)
             usuario = Usuarios.objects.get(User=user)
             context = {
-                'usuario_rut': usuario.rut,
+                'usuario': usuario,
+                'es_alumno': not usuario.es_docente(),
                 'es_docente': usuario.es_docente(),
+
+                # TODO Mandar las coevaluaciones en el context
+                'ultimas_coevaluaciones': []
 
             }
             return HttpResponseRedirect(reverse('usuarios:home', kwargs=context))
 
     logout(request)
     return render(request, 'templates/login.html', {})
+
+
+def home_usuario(request):
+    if not request.user.is_authenticated:
+        return render(request, 'templates/login.html'
+                      )
+    usuario = Usuarios.objects.get(User=request.user)
+    context = {
+        'usuario': usuario,
+        'es_alumno': not usuario.es_docente(),
+        'es_docente': usuario.es_docente(),
+
+        # TODO Mandar las coevaluaciones en el context
+        'ultimas_coevaluaciones': []
+    }
+
+    return render(request, 'templates/Usuarios.html', context)

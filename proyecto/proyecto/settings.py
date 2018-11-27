@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'coevaluaciones.apps.CoevaluacionesConfig',
     'Usuarios.apps.UsuariosConfig',
+    'Cursos.apps.CursosConfig',
 ]
 
 MIDDLEWARE = [
